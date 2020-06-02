@@ -7,7 +7,7 @@ class Square extends React.Component {
     return <button className="square">{this.props.value}</button>;
   }
 }
-
+//Tic tac tow board
 class Board extends React.Component {
   renderSquare(i) {
     return <Square value={i} />;
