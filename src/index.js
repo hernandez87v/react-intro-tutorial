@@ -9,26 +9,8 @@ function Square(props) {
     </button>
   );
 }
-//Tic tac tow board
-class Board extends React.Component {
-  handleClick(i) {
-    const history = this.state.history;
-    const current = history[history.length - 1];
-    const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
-      return;
-    }
-    squares[i] = this.state.xIsNext ? 'X' : 'O';
-    this.setState({
-      history: history.concat([
-        {
-          squares: squares,
-        },
-      ]),
-      xIsNext: !this.state.xIsNext,
-    });
-  }
 
+class Board extends React.Component {
   renderSquare(i) {
     return (
       <Square
@@ -74,10 +56,29 @@ class Game extends React.Component {
     };
   }
 
+  handleClick(i) {
+    const history = this.state.history;
+    const current = history[history.length - 1];
+    const squares = current.squares.slice();
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+    squares[i] = this.state.xIsNext ? 'X' : 'O';
+    this.setState({
+      history: history.concat([
+        {
+          squares: squares,
+        },
+      ]),
+      xIsNext: !this.state.xIsNext,
+    });
+  }
+
   render() {
     const history = this.state.history;
     const current = history[history.length - 1];
     const winner = calculateWinner(current.squares);
+
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
@@ -102,6 +103,10 @@ class Game extends React.Component {
   }
 }
 
+// ========================================
+
+ReactDOM.render(<Game />, document.getElementById('root'));
+
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -121,6 +126,7 @@ function calculateWinner(squares) {
   }
   return null;
 }
+
 // ========================================
 
 ReactDOM.render(<Game />, document.getElementById('root'));
